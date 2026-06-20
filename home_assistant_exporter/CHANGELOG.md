@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.0.5] - 2026-06-20
+
+- Pin the upstream exporter base image to the immutable tag `ghcr.io/cznewt/home-assistant-exporter:2026.6-r2` (was `:latest`)
+
 ## [0.0.4] - 2026-06-20
 
 - Enable `host_network` so the exporter's `:9878` is exposed directly on the host (matches grafana_alloy)

@@ -2,5 +2,5 @@
 # The base image is the upstream exporter image, published from the
 # cznewt/home-assistant-exporter repo. This add-on only layers the HA run script.
 build_from:
-  amd64: ghcr.io/cznewt/home-assistant-exporter:latest
-  aarch64: ghcr.io/cznewt/home-assistant-exporter:latest
+  amd64: ghcr.io/cznewt/home-assistant-exporter:2026.6-r2
+  aarch64: ghcr.io/cznewt/home-assistant-exporter:2026.6-r2

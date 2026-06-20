@@ -1,7 +1,7 @@
 ---
 name: "Home Assistant Exporter"
 description: "Prometheus exporter for Home Assistant device, entity, ZHA and ESPHome diagnostics"
-version: "0.0.4"
+version: "0.0.5"
 slug: "home_assistant_exporter"
 image: "ghcr.io/craftama/home_assistant_exporter/{arch}"
 init: false
