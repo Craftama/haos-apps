@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.0.4] - 2026-06-20
+
+- Enable `host_network` so the exporter's `:9878` is exposed directly on the host (matches grafana_alloy)
+
 ## [0.0.3] - 2026-06-20
 
 - Thin `FROM ghcr.io/cznewt/home-assistant-exporter` wrapper; the exporter image is now built and published from the upstream repo's own `docker/` build

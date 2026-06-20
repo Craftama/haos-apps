@@ -1,7 +1,7 @@
 ---
 name: "Home Assistant Exporter"
 description: "Prometheus exporter for Home Assistant device, entity, ZHA and ESPHome diagnostics"
-version: "0.0.3"
+version: "0.0.4"
 slug: "home_assistant_exporter"
 image: "ghcr.io/craftama/home_assistant_exporter/{arch}"
 init: false
@@ -9,6 +9,7 @@ arch:
   - aarch64
   - amd64
 homeassistant_api: true
+host_network: true
 ports:
   9878/tcp:
 ports_description:
