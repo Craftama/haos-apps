@@ -1,0 +1,24 @@
+name: Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  addon-linter:
+    name: Lint ${{ matrix.addon }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        addon: [grafana_alloy, home_assistant_exporter, salt_minion]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Home Assistant add-on linter
+        uses: frenck/action-addon-linter@v2
+        with:
+          path: "./${{ matrix.addon }}"

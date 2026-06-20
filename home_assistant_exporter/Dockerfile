@@ -4,7 +4,8 @@ FROM $BUILD_FROM
 ARG \
     BUILD_ARCH \
     BUILD_VERSION \
-    HAE_REF="master"
+    HAE_REF="master" \
+    HASS_CLIENT_VERSION="0.1.2"
 
 LABEL \
     io.hass.version=${BUILD_VERSION} \
@@ -27,7 +28,13 @@ RUN apt-get update && \
     python3 -m venv /opt/venv && \
     git clone --depth 1 --branch "${HAE_REF}" \
         https://github.com/cznewt/home-assistant-exporter.git /app && \
-    /opt/venv/bin/pip3 install --no-cache-dir -r /app/requirements.txt
+    # Upstream requirements pin python-hass-client to a now-deleted @master branch.
+    # Drop that line; the rest of requirements.txt provides a modern aiohttp/ujson.
+    sed -i '/python-hass-client/d' /app/requirements.txt && \
+    /opt/venv/bin/pip3 install --no-cache-dir -r /app/requirements.txt && \
+    # Install hass-client with --no-deps: its 0.x pins (aiohttp==3.7.4 -> cchardet) do not
+    # build on Python 3.13, but its code runs fine against the modern aiohttp above.
+    /opt/venv/bin/pip3 install --no-cache-dir --no-deps "hass-client==${HASS_CLIENT_VERSION}"
 
 COPY rootfs /
 
