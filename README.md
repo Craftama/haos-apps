@@ -5,8 +5,10 @@ Craftama's Home Assistant Add-Ons.
 | Add-on | Description |
 | ------ | ----------- |
 | [Grafana Alloy](./grafana_alloy) | Collect, process and export metrics & logs to Prometheus / Loki. |
-| [Home Assistant Exporter](./home_assistant_exporter) | Prometheus exporter for Home Assistant entity states. |
+| [Home Assistant Exporter](./home_assistant_exporter) | Prometheus exporter for HA device / entity / ZHA / ESPHome diagnostics. |
 | [Salt Minion](./salt_minion) | SaltStack minion that connects Home Assistant to a Salt master. |
+
+See [docs/configuration.md](./docs/configuration.md) for per-add-on options and configuration examples.
 
 ## Installation
 
