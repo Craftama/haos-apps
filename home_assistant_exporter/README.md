@@ -41,7 +41,7 @@ hass_entity_last_change / hass_entity_last_update{entity_id}
 | ------------ | ------------------------------------------------------------------------------------------------- | ------- | -------- |
 | `hass_url`   | Websocket URL of the target HA. Empty = Supervisor proxy (`ws://supervisor/core/websocket`).      |         | No       |
 | `hass_token` | Long-lived access token. Empty = the add-on's auto-provisioned Supervisor token.                  |         | No       |
-| `debug`      | Enable debug-level logging.                                                                        | `false` | No       |
+| `log_level`  | Logging verbosity: `debug`, `info`, `warning`, `error`, `critical`.                               | `info`  | No       |
 
 The image version is controlled upstream (the exporter repo's `VERSION` and its `docker-publish`
 workflow). The add-on consumes it as the `build_from` base in `build.yaml` — pin a tag there to

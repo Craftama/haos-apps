@@ -6,6 +6,6 @@ configuration:
   hass_token:
     name: Long-Lived Token
     description: Long-lived access token. Leave empty to use the add-on's Supervisor token.
-  debug:
-    name: Debug Logging
-    description: Log with debug level.
+  log_level:
+    name: Log Level
+    description: Logging verbosity of the exporter (debug, info, warning, error, critical).

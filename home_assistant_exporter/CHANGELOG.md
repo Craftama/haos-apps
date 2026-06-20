@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.0.6] - 2026-06-20
+
+- Replace the `debug` toggle with a `log_level` option (`debug`/`info`/`warning`/`error`/`critical`), passed via the exporter's `LOG_LEVEL` env (new `--log.level` support in the 2026.6-r2 image)
+
 ## [0.0.5] - 2026-06-20
 
 - Pin the upstream exporter base image to the immutable tag `ghcr.io/cznewt/home-assistant-exporter:2026.6-r2` (was `:latest`)
