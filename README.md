@@ -1,6 +1,6 @@
 # haos-addons
 
-newt's Home Assistant Add-Ons.
+Craftama's Home Assistant Add-Ons.
 
 | Add-on | Description |
 | ------ | ----------- |
