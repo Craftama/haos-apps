@@ -8,10 +8,9 @@ metrics only), this exporter correlates entities with **devices, areas, ZHA (Zig
 ESPHome diagnostics** and does not require Service-Discovery-unfriendly token handling — it
 talks to Home Assistant through the Supervisor websocket proxy.
 
-> This add-on is a thin wrapper. The exporter and its Python dependencies are prebuilt in the
-> multi-arch image `ghcr.io/craftama/home-assistant-exporter` (built from
-> [`images/home-assistant-exporter`](../images/home-assistant-exporter)); the add-on pulls that
-> image via `COPY --from` and adds the bashio run script. The exporter logic lives upstream.
+> This add-on is a thin wrapper: it is `FROM ghcr.io/cznewt/home-assistant-exporter` (a prebuilt,
+> multi-arch image built and published from the upstream repo's own `docker/` build) and only adds
+> a small run script that maps the add-on options to the exporter's `HASS_URL` / `HASS_TOKEN` env.
 
 ### Metrics (provided by upstream)
 
@@ -34,7 +33,7 @@ hass_entity_last_change / hass_entity_last_update{entity_id}
 1. Search for "Home Assistant Exporter" in the add-on store and install it.
 1. (Optional) adjust configuration. Defaults talk to the local instance via the Supervisor proxy.
 1. Start the add-on and check the `Logs`.
-1. Browse the metrics at `http://<homeassistant_ip>:9145/metrics`.
+1. Browse the metrics at `http://<homeassistant_ip>:9878/metrics`.
 
 ## Configuration
 
@@ -44,15 +43,15 @@ hass_entity_last_change / hass_entity_last_update{entity_id}
 | `hass_token` | Long-lived access token. Empty = the add-on's auto-provisioned Supervisor token.                  |         | No       |
 | `debug`      | Enable debug-level logging.                                                                        | `false` | No       |
 
-The upstream revision is pinned in the exporter image build (`images/home-assistant-exporter`,
-`--build-arg HAE_REF=<git-ref>`), not here. Override the consumed image with
-`--build-arg EXPORTER_IMAGE=<ref>` if needed.
+The image version is controlled upstream (the exporter repo's `VERSION` and its `docker-publish`
+workflow). The add-on consumes it as the `build_from` base in `build.yaml` — pin a tag there to
+freeze the exporter version.
 
 ### Grafana Alloy Config Example
 
 ```alloy
 prometheus.scrape "home_assistant" {
-	targets    = [{ __address__ = "<homeassistant_ip>:9145" }]
+	targets    = [{ __address__ = "<homeassistant_ip>:9878" }]
 	forward_to = [prometheus.remote_write.default.receiver]
 	job_name   = "home_assistant"
 }
@@ -61,6 +60,4 @@ prometheus.scrape "home_assistant" {
 ## Todo
 
 - [ ] Add an icon/logo
-- [ ] Add an AppArmor profile
-- [ ] Pin `HAE_REF` to a released upstream version once the app is tagged
-- [ ] Make the `ghcr.io/craftama/home-assistant-exporter` package public so add-on builds can pull it
+- [ ] Make the `ghcr.io/cznewt/home-assistant-exporter` package public so add-on builds can pull it

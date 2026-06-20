@@ -1,9 +1,8 @@
+# Thin Home Assistant OS wrapper around the upstream exporter image
+# (set as build_from in build.yaml): https://github.com/cznewt/home-assistant-exporter
+# All exporter code + Python dependencies live in that prebuilt, multi-arch image;
+# here we only translate add-on options into the HASS_URL / HASS_TOKEN env it reads.
 ARG BUILD_FROM
-ARG EXPORTER_IMAGE="ghcr.io/craftama/home-assistant-exporter:latest"
-
-# Prebuilt, multi-arch upstream exporter (built from images/home-assistant-exporter)
-FROM ${EXPORTER_IMAGE} AS exporter
-
 FROM $BUILD_FROM
 
 ARG \
@@ -15,16 +14,7 @@ LABEL \
     io.hass.type="addon" \
     io.hass.arch="${BUILD_ARCH}"
 
-# This add-on is a thin Home Assistant OS wrapper. The exporter and its Python
-# dependencies are prebuilt in the GHCR image referenced by EXPORTER_IMAGE; here
-# we only add the Python runtime the venv needs plus the bashio run script.
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends python3 && \
-    rm -rf /var/lib/apt/lists/* && \
-    apt clean
-
-COPY --from=exporter /opt/venv /opt/venv
-COPY --from=exporter /app /app
+USER root
 
 COPY rootfs /
 RUN chmod a+x /run.sh

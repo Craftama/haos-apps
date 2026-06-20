@@ -57,7 +57,7 @@ cluster_name: "house"
 
 Wrapper around [`cznewt/home-assistant-exporter`](https://github.com/cznewt/home-assistant-exporter).
 Exposes device/entity/ZHA/ESPHome diagnostics as Prometheus metrics on
-`http://<homeassistant_ip>:9145/metrics`. Talks to HA over the Supervisor websocket proxy by default
+`http://<homeassistant_ip>:9878/metrics`. Talks to HA over the Supervisor websocket proxy by default
 (`homeassistant_api: true`), so no manual token is required.
 
 ### Options
@@ -87,7 +87,7 @@ hass_token: "eyJhbGciOi...your-long-lived-token..."
 
 ```alloy
 prometheus.scrape "home_assistant" {
-	targets    = [{ __address__ = "homeassistant.lan:9145" }]
+	targets    = [{ __address__ = "homeassistant.lan:9878" }]
 	forward_to = [prometheus.remote_write.default.receiver]
 	job_name   = "home_assistant"
 }
@@ -99,7 +99,7 @@ prometheus.scrape "home_assistant" {
 scrape_configs:
   - job_name: home_assistant
     static_configs:
-      - targets: ["homeassistant.lan:9145"]
+      - targets: ["homeassistant.lan:9878"]
 ```
 
 ---
