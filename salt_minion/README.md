@@ -47,18 +47,19 @@ accept the key once — it survives restarts and updates.
 
 ## Host access
 
-This add-on intentionally ships with no host privileges. If you need the minion to see more of the
-host, add the relevant flags to `config.yaml` (and disable Protection mode in the add-on panel):
+To let the minion reach beyond its own container, the add-on enables host namespaces and a set of
+privileged capabilities. **Disable Protection mode** in the add-on panel for these to take effect:
 
-- `host_network: true` — share the host network namespace.
-- `host_pid: true` — see host processes.
-- `host_dbus: true` — reach the host system D-Bus.
-- `privileged: [SYS_ADMIN, ...]` — grant specific Linux capabilities.
-- `map:` — mount HA directories (`homeassistant_config`, `share`, `addons`, `all_addon_configs`, ...).
-- `full_access: true` — full hardware/host access (strongly discouraged; appliance host remains immutable).
+- `host_network` — host network namespace (host IP, network grains).
+- `host_pid` — host PID namespace (see/signal host processes).
+- `host_dbus` — host system D-Bus (e.g. systemd).
+- `privileged: SYS_ADMIN, SYS_PTRACE, SYS_RAWIO, NET_ADMIN, DAC_READ_SEARCH` — capabilities for
+  inspecting and entering host namespaces (e.g. `nsenter` into PID 1).
 
-On the HAOS appliance these still cannot give you a writable, generally manageable host OS. For real
-host management, install `salt-minion` on the host itself on an HA Supervised setup.
+Even with these, on the **HAOS appliance** the system partition is read-only and Supervisor-managed,
+so you still cannot treat it as a general, writable host. For full host management run `salt-minion`
+directly on the host (realistic only on **HA Supervised**). Add `full_access: true` and/or
+`map:` (HA directories) if you need still broader access.
 
 ## Todo
 
