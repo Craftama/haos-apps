@@ -1,0 +1,10 @@
+#!/usr/bin/env bashio
+# ==============================================================================
+# Runs the SaltStack minion in the foreground
+# ==============================================================================
+
+LOG_LEVEL="$(bashio::config 'log_level')"
+
+bashio::log.info "Starting Salt minion (log level: ${LOG_LEVEL})"
+
+exec salt-minion --log-level "${LOG_LEVEL}"

@@ -1,0 +1,17 @@
+---
+configuration:
+  master:
+    name: Salt Master
+    description: Hostname or IP address of the Salt master to connect to.
+  minion_id:
+    name: Minion ID
+    description: Identifier this minion presents to the master. Defaults to the container hostname.
+  master_port:
+    name: Master Port (ret)
+    description: The ZeroMQ request/return port of the Salt master (default 4506).
+  publish_port:
+    name: Publish Port (pub)
+    description: The ZeroMQ publish port the minion subscribes to (default 4505).
+  log_level:
+    name: Log Level
+    description: Logging verbosity of the minion.

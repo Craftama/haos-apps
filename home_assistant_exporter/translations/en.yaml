@@ -1,0 +1,11 @@
+---
+configuration:
+  hass_url:
+    name: Home Assistant URL
+    description: Websocket URL of the target Home Assistant. Leave empty to use the Supervisor proxy (ws://supervisor/core/websocket).
+  hass_token:
+    name: Long-Lived Token
+    description: Long-lived access token. Leave empty to use the add-on's Supervisor token.
+  debug:
+    name: Debug Logging
+    description: Log with debug level.

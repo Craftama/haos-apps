@@ -1,0 +1,23 @@
+---
+name: "Home Assistant Exporter"
+description: "Prometheus exporter for Home Assistant device, entity, ZHA and ESPHome diagnostics"
+version: "0.0.1"
+slug: "home_assistant_exporter"
+init: false
+arch:
+  - aarch64
+  - amd64
+homeassistant_api: true
+ports:
+  9145/tcp:
+ports_description:
+  9145/tcp: Exporter Web Port
+
+options:
+  hass_url: ""
+  hass_token: ""
+  debug: false
+schema:
+  hass_url: str?
+  hass_token: password?
+  debug: bool

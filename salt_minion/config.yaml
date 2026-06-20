@@ -1,0 +1,22 @@
+---
+name: "Salt Minion"
+description: "SaltStack minion that connects Home Assistant to a Salt master"
+version: "0.0.1"
+slug: "salt_minion"
+init: false
+arch:
+  - aarch64
+  - amd64
+
+options:
+  master: ""
+  minion_id: ""
+  master_port: 4506
+  publish_port: 4505
+  log_level: "info"
+schema:
+  master: str
+  minion_id: str?
+  master_port: port
+  publish_port: port
+  log_level: list(garbage|trace|debug|info|warning|error|critical)
