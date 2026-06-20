@@ -1,8 +1,7 @@
 name: Build add-ons
 
+# Validation only (no push) — runs on PRs. Pushes to main publish via publish.yaml.
 on:
-  push:
-    branches: [main]
   pull_request:
   workflow_dispatch:
 

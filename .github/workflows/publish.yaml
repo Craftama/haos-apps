@@ -1,0 +1,52 @@
+name: Publish add-on images
+
+# Builds each add-on for all its architectures and pushes to the GHCR image set in
+# its config.yaml `image:` key, tagged with the add-on's config.yaml `version`.
+# Make the resulting GHCR packages public so Home Assistant can pull them on install.
+# NB: home_assistant_exporter's build_from is ghcr.io/cznewt/home-assistant-exporter,
+# which must be published and public first (built by the exporter repo).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "grafana_alloy/**"
+      - "home_assistant_exporter/**"
+      - "salt_minion/**"
+      - ".github/workflows/publish.yaml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    name: ${{ matrix.addon }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        addon: [grafana_alloy, home_assistant_exporter, salt_minion]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build & publish ${{ matrix.addon }}
+        uses: home-assistant/builder@2025.03.0
+        with:
+          args: |
+            --aarch64 \
+            --amd64 \
+            --target /data/${{ matrix.addon }} \
+            --addon

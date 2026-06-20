@@ -10,6 +10,9 @@ Craftama's Home Assistant Add-Ons.
 
 See [docs/configuration.md](./docs/configuration.md) for per-add-on options and configuration examples.
 
+Add-on images are prebuilt by the `publish` workflow and pulled from `ghcr.io/craftama/<slug>/<arch>`
+(set as each add-on's `image:`), so installs don't compile on-device. The GHCR packages must be public.
+
 ## Installation
 
 ### Automatic

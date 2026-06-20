@@ -2,7 +2,7 @@
 
 Configuration reference and worked examples for the add-ons in this repository. Each add-on is
 configured from its **Configuration** tab in Home Assistant (the keys below map to `config.yaml`
-options); the matching `bashio` reads happen in the add-on's `run.sh`.
+options, read by the add-on's `run.sh`).
 
 - [Grafana Alloy](#grafana-alloy)
 - [Home Assistant Exporter](#home-assistant-exporter)
