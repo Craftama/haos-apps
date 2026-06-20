@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.0.4] - 2026-06-20
+
+- Add `minion_private_key` / `minion_public_key` options so the minion key pair can be managed from the add-on UI; seeded into the PKI dir on start (zero-touch acceptance when the master already trusts the key)
+
 ## [0.0.3] - 2026-06-20
 
 - Add host-access flags: `host_pid`, `host_dbus` and `privileged` (SYS_ADMIN, SYS_PTRACE, SYS_RAWIO, NET_ADMIN, DAC_READ_SEARCH) so the minion can inspect/enter host namespaces (requires Protection mode off)

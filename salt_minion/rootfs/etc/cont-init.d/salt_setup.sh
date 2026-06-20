@@ -8,6 +8,20 @@ if [ ! -L /etc/salt/pki ]; then
     ln -s /data/pki /etc/salt/pki
 fi
 
+# Optionally seed the minion key pair from configuration so keys can be managed
+# from the add-on UI. If the master already trusts this key, acceptance is
+# zero-touch; otherwise it is still pending until accepted on the master.
+mkdir -p /etc/salt/pki/minion
+if bashio::config.has_value 'minion_private_key'; then
+    bashio::config 'minion_private_key' > /etc/salt/pki/minion/minion.pem
+    chmod 400 /etc/salt/pki/minion/minion.pem
+    bashio::log.info "Loaded minion private key from configuration"
+fi
+if bashio::config.has_value 'minion_public_key'; then
+    bashio::config 'minion_public_key' > /etc/salt/pki/minion/minion.pub
+    chmod 644 /etc/salt/pki/minion/minion.pub
+fi
+
 if bashio::config.is_empty 'master'; then
     bashio::exit.nok "The 'master' option is required (address of your Salt master)."
 fi

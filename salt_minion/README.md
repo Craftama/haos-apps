@@ -33,6 +33,8 @@ your Salt master, so the add-on can be managed as a Salt target.
 | `master_port`  | ZeroMQ request/return (ret) port of the master.                          | `4506`  | No       |
 | `publish_port` | ZeroMQ publish (pub) port the minion subscribes to.                      | `4505`  | No       |
 | `log_level`    | Minion logging verbosity.                                                | `info`  | No       |
+| `minion_private_key` | PEM minion private key. If set, seeded into the PKI dir on start.   |         | No       |
+| `minion_public_key`  | Minion public key. Paired with `minion_private_key`.               |         | No       |
 
 ### Ports
 
@@ -42,8 +44,13 @@ Salt's ZeroMQ transport uses **two** ports, both opened **outbound** from the mi
 - **4505** (`publish_port`) — the minion subscribes to the master's publish bus for job broadcasts.
 - **4506** (`master_port`) — the minion makes request/return calls (job returns, file server).
 
+### Keys
+
 Minion keys are stored in the add-on data volume (`/data/pki`), so the master only needs to
-accept the key once — it survives restarts and updates.
+accept the key once — it survives restarts and updates. To manage the key from the UI instead of
+letting the minion auto-generate one, paste a PEM key pair into `minion_private_key` /
+`minion_public_key` (best edited via the add-on's YAML config). If the master already trusts that
+key, acceptance is zero-touch; otherwise accept it as usual with `salt-key -a <minion_id>`.
 
 ## Host access
 

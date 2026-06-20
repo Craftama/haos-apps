@@ -1,7 +1,7 @@
 ---
 name: "Salt Minion"
 description: "SaltStack minion that connects Home Assistant to a Salt master"
-version: "0.0.3"
+version: "0.0.4"
 slug: "salt_minion"
 image: "ghcr.io/craftama/salt_minion/{arch}"
 init: false
@@ -24,9 +24,13 @@ options:
   master_port: 4506
   publish_port: 4505
   log_level: "info"
+  minion_private_key: ""
+  minion_public_key: ""
 schema:
   master: str
   minion_id: str?
   master_port: port
   publish_port: port
   log_level: list(garbage|trace|debug|info|warning|error|critical)
+  minion_private_key: str?
+  minion_public_key: str?
