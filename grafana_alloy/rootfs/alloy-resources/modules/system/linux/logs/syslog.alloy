@@ -1,0 +1,58 @@
+
+
+declare "file_source" {
+  argument "forward_to" {
+    comment = "Must be a list(LogsReceiver) where collected metrics should be forwarded to"
+  }
+
+  argument "job_label" {
+    comment = "The job label to add for all grafana metric (default: integrations/node_exporter)"
+    optional = true
+  }
+
+  local.file_match "syslog_scrape" {
+    path_targets = [{
+      __address__ = "localhost",
+      __path__ = "/var/log/{syslog,messages,*.log}",
+      instance = constants.hostname,
+      job = coalesce(argument.job_label.value, "integrations/syslog/file"),
+    }]
+  }
+
+  loki.source.file "syslog_scrape" {
+    targets = local.file_match.syslog_scrape.targets
+    forward_to = argument.forward_to.value
+  }
+}
+
+declare "syslog_source" {
+  argument "forward_to" {
+    comment = "Must be a list(LogsReceiver) where collected metrics should be forwarded to"
+  }
+
+  argument "job_label" {
+    comment = "The job label to add for all grafana metric (default: integrations/node_exporter)"
+    optional = true
+  }
+
+  loki.source.syslog "local" {
+    listener {
+      address  = "0.0.0.0:51893"
+      labels = { 
+        instance = constants.hostname,
+        job = coalesce(argument.job_label.value, "integrations/syslog/tcp"),
+      }
+    }
+  
+    listener {
+      address = "0.0.0.0:51898"
+      protocol = "udp"
+      labels = {
+        instance = constants.hostname,
+        job = coalesce(argument.job_label.value, "integrations/syslog/udp"),
+      }
+    }
+  
+    forward_to = argument.forward_to.value
+  }
+}

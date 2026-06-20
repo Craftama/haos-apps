@@ -1,0 +1,52 @@
+// Collect logs from systemd journal for node_exporter integration
+declare "source" {
+  argument "forward_to" {
+    comment = "Must be a list(LogsReceiver) where collected metrics should be forwarded to"
+  }
+
+  argument "max_age" {
+    comment = "Only collect logs from the last 24 hours"
+    default = "24h0m0s"
+    optional = true
+  }
+
+  argument "job_label" {
+    comment = "The job label to add for all grafana metric (default: integrations/grafana)"
+    optional = true
+  }
+
+  loki.source.journal "journal_scrape" {
+    max_age = "24h0m0s"
+    relabel_rules = discovery.relabel.journal_scrape.rules
+    forward_to = argument.forward_to.value
+  }
+
+  // Define relabeling rules for systemd journal logs
+  discovery.relabel "journal_scrape" {
+    targets = []
+  
+    rule {
+      // Extract systemd unit information into a label
+      source_labels = ["__journal__systemd_unit"]
+      target_label = "unit"
+    }
+  
+    rule {
+      // Extract boot ID information into a label
+      source_labels = ["__journal__boot_id"]
+      target_label = "boot_id"
+    }
+  
+    rule {
+      // Extract transport information into a label
+      source_labels = ["__journal__transport"]
+      target_label = "transport"
+    }
+  
+    rule {
+      // Extract log priority into a level label
+      source_labels = ["__journal_priority_keyword"]
+      target_label = "level"
+    }
+  }
+}

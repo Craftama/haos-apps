@@ -1,0 +1,29 @@
+declare "source" {
+  argument "path" {
+    comment = "The path to scrape logs from"
+    optional = false
+  }
+  argument "forward_to" {
+    comment = "Must be a list(LogsReceiver) where collected metrics should be forwarded to"
+  }
+
+  argument "job_label" {
+    comment = "The job label to add for all grafana metric (default: integrations/node_exporter)"
+    optional = true
+  }
+
+  // Define which log files to collect for node_exporter
+  local.file_match "direct_scrape" {
+    path_targets = [{
+      __address__ = "localhost",
+      __path__ = argument.path.value,
+      instance = constants.hostname,
+      job = coalesce(argument.job_label.value, "integrations/node_exporter"),
+    }]
+  }
+  
+  loki.source.file "direct_scrape" {
+    targets = local.file_match.direct_scrape.targets
+    forward_to = argument.forward_to.value
+  }
+}

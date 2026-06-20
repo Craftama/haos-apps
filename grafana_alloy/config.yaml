@@ -1,48 +1,34 @@
 ---
 name: "Grafana Alloy"
-description: "Grafana Alloy"
-version: "0.0.8"
+description: "Grafana Alloy running the alloy-resources HassOS scenario (metrics + logs)"
+version: "0.1.0"
 slug: "grafana_alloy"
+init: false
 arch:
   - aarch64
   - amd64
 ports:
   12345/tcp:
-  5514/udp:
-  5601/tcp:
 ports_description:
   12345/tcp: Alloy web server
-  5514/udp: Alloy UDP syslog
-  5601/tcp: Alloy TCP syslog
 journald: true
 host_network: true
 host_pid: true
-map:
-  - type: homeassistant_config
-    path: /config
+docker_api: true
 
 options:
-  enable_prometheus: true
-  prometheus_write_endpoint: http://prometheus:9090/api/v1/write
-  enable_unix_component: true
-  enable_process_component: true
-  prometheus_scrape_interval: 15s
-  servername_tag: "HomeAssistant"
-  enable_loki: false
-  loki_endpoint: http://loki:3100/api/v1/push
-  enable_loki_syslog: false
-  override_config: false
-  override_config_path: "/config/alloy/example.alloy"
+  metrics_url: ""
+  metrics_tenant: ""
+  logs_url: ""
+  logs_tenant: ""
+  cluster_name: "HomeAssistant"
+  env: ""
+  region: ""
 schema:
-  enable_prometheus: bool
-  prometheus_write_endpoint: str?
-  enable_unix_component: bool
-  enable_process_component: bool
-  prometheus_scrape_interval: list(15s|30s|60s)
-  servername_tag: str?
-  instance_tag: str?
-  enable_loki: bool
-  loki_endpoint: str?
-  enable_loki_syslog: bool
-  override_config: bool
-  override_config_path: str?
+  metrics_url: str?
+  metrics_tenant: str?
+  logs_url: str?
+  logs_tenant: str?
+  cluster_name: str?
+  env: str?
+  region: str?

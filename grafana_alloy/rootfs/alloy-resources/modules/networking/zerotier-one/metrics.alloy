@@ -1,0 +1,14 @@
+loki.source.file "zerotier_one" {
+  targets = [
+    {
+      __path__ = "/userdata/system/logs/zerotier_one.log",
+	  "app_part_of" = "zerotier-one",
+	  "app_component" = "node",
+	  "app_name" = "zerotier-one-node",
+	  "container" = "zerotier-one-node",
+	  "namespace" = "default",
+	  "pod" = string.format("zerotier-one-node-%s", constants.hostname),
+	},
+  ]
+  forward_to = [loki.relabel.final.receiver]
+}

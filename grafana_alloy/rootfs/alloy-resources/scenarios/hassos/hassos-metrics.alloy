@@ -1,0 +1,47 @@
+// HassOS default metrics pipeline
+
+import.file "process_metrics" { filename = "/alloy-resources/modules/system/linux/metrics/process.alloy" }
+import.file "unix_metrics" { filename = "/alloy-resources/modules/system/linux/metrics/unix.alloy" }
+import.file "docker_metrics" { filename = "/alloy-resources/modules/system/docker/metrics.alloy" }
+
+// Collect metrics from unix exporter for node_exporter integration
+process_metrics.exporter "targets" {}
+process_metrics.scrape "metrics" {
+  targets = process_metrics.exporter.targets.output
+  forward_to = [
+    prometheus.remote_write.local.receiver,
+  ]
+}
+
+// Collect metrics from process exporter for node_exporter integration
+unix_metrics.exporter "targets" {}
+unix_metrics.scrape "metrics" {
+  targets = unix_metrics.exporter.targets.output
+  forward_to = [
+    prometheus.remote_write.local.receiver,
+  ]
+}
+
+// Collect metrics from cadvisor exporter for docker integration
+docker_metrics.exporter "targets" {}
+docker_metrics.scrape "metrics" {
+  targets = docker_metrics.exporter.targets.output
+  forward_to = [
+    prometheus.remote_write.local.receiver,
+  ]
+}
+
+// Sink metrics
+prometheus.remote_write "local" {
+  endpoint {
+    url = sys.env("METRICS_PRIMARY_URL")
+    headers = {
+      "X-Scope-OrgID" = sys.env("METRICS_PRIMARY_ORG"),
+    }
+  }
+  external_labels = {
+    "cluster" = coalesce(sys.env("CLUSTER_NAME"), sys.env("CLUSTER"), ""),
+    "env" = coalesce(sys.env("ENV"), ""),
+    "region" = coalesce(sys.env("REGION"), ""),
+  }
+}

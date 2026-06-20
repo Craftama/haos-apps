@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.1.0] - 2026-06-20
+
+- Switch to the alloy-resources **HassOS scenario** (`/alloy-resources/scenarios/hassos`)
+- Vendor the alloy-resources `modules/` tree into the image so the scenario's `import.file` paths resolve offline
+- Adds Docker (cAdvisor) metrics and Docker container logs, plus the shared log-processing pipeline (levels, labels, log metrics)
+- Replace the option-driven `envsubst` template with environment-variable config: `metrics_url`/`metrics_tenant`, `logs_url`/`logs_tenant`, `cluster_name`/`env`/`region`
+- Enable `docker_api` for the Docker socket; drop the syslog ports and the override-config option
+- AppArmor profile temporarily removed (the old profile blocks `/alloy-resources`, the Docker socket and cAdvisor); see README TODO
+
 ## [0.0.8] - 2026-01-26
 
 - Bump Grafana Alloy version to [1.12.2](https://github.com/grafana/alloy/releases/tag/v1.12.2)

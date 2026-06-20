@@ -1,0 +1,45 @@
+// Collect logs from docker
+declare "source" {
+  argument "docker_host" {
+    default = "unix:///var/run/docker.sock"
+    optional = true
+  }
+  argument "forward_to" {
+    comment = "Must be a list(LogsReceiver) where collected metrics should be forwarded to"
+  }
+
+  argument "job_label" {
+    comment = "The job label to add for all grafana metric (default: integrations/docker)"
+    optional = true
+  }
+
+  // Discover Docker containers and extract metadata.
+  discovery.docker "linux" {
+    host = argument.docker_host.value
+  }
+
+  // Define a relabeling rule to create a service name from the container name.
+  discovery.relabel "docker" {
+    targets = []
+    
+    rule {
+      source_labels = ["__meta_docker_container_name"]
+      regex = "/(.*)"
+      target_label = "container"
+    }
+
+    rule {
+      target_label = "instance"
+      replacement = constants.hostname
+    }
+
+  }
+
+  // Configure component to collect logs from Docker containers.
+  loki.source.docker "default" {
+    host = argument.docker_host.value
+    targets = discovery.docker.linux.targets
+    relabel_rules = discovery.relabel.docker.rules
+    forward_to = argument.forward_to.value
+  }
+}

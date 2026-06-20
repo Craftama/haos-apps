@@ -14,7 +14,6 @@ LABEL \
 RUN apt-get update && \
   apt-get install -y --no-install-recommends \
         unzip \
-        gettext-base \
         curl && \
     rm -rf /var/lib/apt/lists/* && \
     apt clean && \
@@ -27,8 +26,9 @@ RUN apt-get update && \
     chmod +x /usr/local/bin/alloy && \
     rm -rf /tmp/alloy*
 
+# rootfs ships /run.sh plus the vendored alloy-resources modules + hassos scenario
 COPY rootfs /
-RUN chmod +x /run.sh /etc/cont-init.d/alloy_setup.sh /etc/services.d/alloy/run
+RUN chmod +x /run.sh
 
 ENTRYPOINT []
 CMD ["/run.sh"]
