@@ -1,0 +1,59 @@
+name: Publish exporter image
+
+# Builds the standalone, multi-arch Home Assistant Exporter image and pushes it to
+# ghcr.io/<owner>/home-assistant-exporter. The home_assistant_exporter add-on consumes
+# this image via COPY --from, so publish it before the add-on build workflow runs.
+# NB: make the resulting GHCR package public so the add-on build can pull it.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "images/home-assistant-exporter/**"
+      - ".github/workflows/publish-exporter.yaml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/home-assistant-exporter
+          tags: |
+            type=raw,value=latest
+            type=sha,format=short
+            type=ref,event=tag
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: ./images/home-assistant-exporter
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

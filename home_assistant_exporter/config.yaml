@@ -1,7 +1,7 @@
 ---
 name: "Home Assistant Exporter"
 description: "Prometheus exporter for Home Assistant device, entity, ZHA and ESPHome diagnostics"
-version: "0.0.1"
+version: "0.0.2"
 slug: "home_assistant_exporter"
 init: false
 arch:

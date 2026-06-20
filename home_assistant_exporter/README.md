@@ -8,8 +8,10 @@ metrics only), this exporter correlates entities with **devices, areas, ZHA (Zig
 ESPHome diagnostics** and does not require Service-Discovery-unfriendly token handling — it
 talks to Home Assistant through the Supervisor websocket proxy.
 
-> This add-on is a thin wrapper: it clones and runs the upstream app at build time. The
-> exporter logic lives in the upstream repository.
+> This add-on is a thin wrapper. The exporter and its Python dependencies are prebuilt in the
+> multi-arch image `ghcr.io/craftama/home-assistant-exporter` (built from
+> [`images/home-assistant-exporter`](../images/home-assistant-exporter)); the add-on pulls that
+> image via `COPY --from` and adds the bashio run script. The exporter logic lives upstream.
 
 ### Metrics (provided by upstream)
 
@@ -42,7 +44,9 @@ hass_entity_last_change / hass_entity_last_update{entity_id}
 | `hass_token` | Long-lived access token. Empty = the add-on's auto-provisioned Supervisor token.                  |         | No       |
 | `debug`      | Enable debug-level logging.                                                                        | `false` | No       |
 
-To pin a specific upstream revision, build with `--build-arg HAE_REF=<git-ref>` (defaults to `master`).
+The upstream revision is pinned in the exporter image build (`images/home-assistant-exporter`,
+`--build-arg HAE_REF=<git-ref>`), not here. Override the consumed image with
+`--build-arg EXPORTER_IMAGE=<ref>` if needed.
 
 ### Grafana Alloy Config Example
 
@@ -59,3 +63,4 @@ prometheus.scrape "home_assistant" {
 - [ ] Add an icon/logo
 - [ ] Add an AppArmor profile
 - [ ] Pin `HAE_REF` to a released upstream version once the app is tagged
+- [ ] Make the `ghcr.io/craftama/home-assistant-exporter` package public so add-on builds can pull it
