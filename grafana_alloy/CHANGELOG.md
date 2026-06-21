@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.1.2] - 2026-06-21
+
+- Trim whitespace from option values in `run.sh` so a stray leading/trailing space (e.g. `" http://…"`) no longer produces an invalid `remote_write` URL
+
 ## [0.1.1] - 2026-06-21
 
 - Update description to Alloy's tagline; drop `logo.png` (keep `icon.png`)

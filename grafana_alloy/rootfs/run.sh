@@ -5,13 +5,17 @@
 # (see /alloy-resources/scenarios/hassos/*.alloy).
 # ==============================================================================
 
-export METRICS_PRIMARY_URL="$(bashio::config 'metrics_url')"
-export METRICS_PRIMARY_ORG="$(bashio::config 'metrics_tenant')"
-export LOGS_PRIMARY_URL="$(bashio::config 'logs_url')"
-export LOGS_PRIMARY_ORG="$(bashio::config 'logs_tenant')"
-export CLUSTER_NAME="$(bashio::config 'cluster_name')"
-export ENV="$(bashio::config 'env')"
-export REGION="$(bashio::config 'region')"
+# Trim leading/trailing whitespace so a stray space in an option (e.g. " http://...")
+# does not produce an invalid URL/value.
+trim() { local v="$1"; v="${v#"${v%%[![:space:]]*}"}"; v="${v%"${v##*[![:space:]]}"}"; printf '%s' "$v"; }
+
+export METRICS_PRIMARY_URL="$(trim "$(bashio::config 'metrics_url')")"
+export METRICS_PRIMARY_ORG="$(trim "$(bashio::config 'metrics_tenant')")"
+export LOGS_PRIMARY_URL="$(trim "$(bashio::config 'logs_url')")"
+export LOGS_PRIMARY_ORG="$(trim "$(bashio::config 'logs_tenant')")"
+export CLUSTER_NAME="$(trim "$(bashio::config 'cluster_name')")"
+export ENV="$(trim "$(bashio::config 'env')")"
+export REGION="$(trim "$(bashio::config 'region')")"
 
 if bashio::config.is_empty 'metrics_url' && bashio::config.is_empty 'logs_url'; then
     bashio::log.warning "Neither metrics_url nor logs_url is set — Alloy will run but export nowhere."
