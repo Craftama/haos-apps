@@ -1,0 +1,6 @@
+// Scrape the Home Assistant Exporter add-on (host network, :9878)
+prometheus.scrape "home_assistant_exporter" {
+  targets    = [{ __address__ = "localhost:9878" }]
+  forward_to = [prometheus.remote_write.local.receiver]
+  job_name   = "home_assistant_exporter"
+}

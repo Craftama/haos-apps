@@ -24,3 +24,21 @@ configuration:
   instance:
     name: Instance (hostname)
     description: Override the "instance" label on all metrics (e.g. this host's name). Empty keeps the scrape default.
+  enable_unix:
+    name: Node Metrics
+    description: Collect host node_exporter (unix) metrics.
+  enable_process:
+    name: Process Metrics
+    description: Collect process_exporter metrics.
+  enable_docker:
+    name: Docker Metrics & Logs
+    description: Collect cAdvisor metrics and Docker container logs (needs Protection mode off).
+  enable_journal:
+    name: Journal Logs
+    description: Collect systemd journal logs.
+  scrape_exporter:
+    name: Scrape Home Assistant Exporter
+    description: Scrape the Home Assistant Exporter add-on at :9878.
+  scrape_core:
+    name: Scrape Home Assistant Core
+    description: Scrape Home Assistant core /api/prometheus (no auth; needs the Prometheus integration enabled in HA).

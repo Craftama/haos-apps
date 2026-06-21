@@ -1,0 +1,74 @@
+// HassOS base: metric + log sinks and the shared log-processing pipeline.
+// Input pipelines (metrics-*, logs-*) forward into the receivers defined here.
+
+import.file "log_levels" { filename = "/alloy-resources/modules/utils/logs/levels.alloy" }
+import.file "log_metrics" { filename = "/alloy-resources/modules/utils/logs/metrics.alloy" }
+import.file "log_labels" { filename = "/alloy-resources/modules/utils/logs/labels.alloy" }
+
+logging {
+  level = "info"
+  write_to = [loki.write.local.receiver]
+}
+
+// Shared log-processing chain; log sources forward into log_levels.default_level.
+log_levels.default_level "default" {
+  forward_to = [log_levels.normalize_level.default.receiver]
+}
+
+log_levels.normalize_level "default" {
+  forward_to = [
+    log_metrics.pre_process_metrics.default.receiver,
+    log_levels.drop_levels.default.receiver,
+  ]
+}
+
+log_metrics.pre_process_metrics "default" {}
+
+log_levels.drop_levels "default" {
+  forward_to = [log_labels.keep_labels.default.receiver]
+}
+
+log_labels.keep_labels "default" {
+  forward_to = [
+    log_metrics.post_process_metrics.default.receiver,
+    loki.write.local.receiver,
+  ]
+}
+
+log_metrics.post_process_metrics "default" {}
+
+// Sink: logs
+loki.write "local" {
+  endpoint {
+    url = sys.env("LOGS_PRIMARY_URL")
+    tenant_id = sys.env("LOGS_PRIMARY_ORG")
+  }
+
+  external_labels = {
+    "cluster" = coalesce(sys.env("CLUSTER_NAME"), sys.env("CLUSTER"), ""),
+    "env" = coalesce(sys.env("ENV"), ""),
+    "region" = coalesce(sys.env("REGION"), ""),
+  }
+}
+
+// Sink: metrics
+prometheus.remote_write "local" {
+  endpoint {
+    url = sys.env("METRICS_PRIMARY_URL")
+    headers = {
+      "X-Scope-OrgID" = sys.env("METRICS_PRIMARY_ORG"),
+    }
+    // Override the instance label when INSTANCE is set; otherwise keep it as-is.
+    write_relabel_config {
+      source_labels = ["instance"]
+      regex         = "(.+)"
+      target_label  = "instance"
+      replacement   = coalesce(sys.env("INSTANCE"), "$1")
+    }
+  }
+  external_labels = {
+    "cluster" = coalesce(sys.env("CLUSTER_NAME"), sys.env("CLUSTER"), ""),
+    "env" = coalesce(sys.env("ENV"), ""),
+    "region" = coalesce(sys.env("REGION"), ""),
+  }
+}

@@ -1,0 +1,8 @@
+// cAdvisor (docker) metrics
+import.file "docker_metrics" { filename = "/alloy-resources/modules/system/docker/metrics.alloy" }
+
+docker_metrics.exporter "targets" {}
+docker_metrics.scrape "metrics" {
+  targets = docker_metrics.exporter.targets.output
+  forward_to = [prometheus.remote_write.local.receiver]
+}

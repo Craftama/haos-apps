@@ -1,7 +1,7 @@
 ---
 name: "Grafana Alloy"
 description: "OpenTelemetry Collector distribution with programmable pipelines"
-version: "0.1.3"
+version: "0.2.0"
 slug: "grafana_alloy"
 image: "ghcr.io/craftama/grafana_alloy/{arch}"
 init: false
@@ -26,6 +26,12 @@ options:
   env: ""
   region: ""
   instance: ""
+  enable_unix: true
+  enable_process: true
+  enable_docker: true
+  enable_journal: true
+  scrape_exporter: false
+  scrape_core: false
 schema:
   metrics_url: str?
   metrics_tenant: str?
@@ -35,3 +41,9 @@ schema:
   env: str?
   region: str?
   instance: str?
+  enable_unix: bool
+  enable_process: bool
+  enable_docker: bool
+  enable_journal: bool
+  scrape_exporter: bool
+  scrape_core: bool

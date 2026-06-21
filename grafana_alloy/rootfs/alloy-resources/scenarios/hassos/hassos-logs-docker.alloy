@@ -1,0 +1,6 @@
+// Docker container logs
+import.file "docker_logs" { filename = "/alloy-resources/modules/system/docker/logs.alloy" }
+
+docker_logs.source "default" {
+  forward_to = [log_levels.default_level.default.receiver]
+}

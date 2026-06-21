@@ -1,0 +1,8 @@
+// process_exporter metrics
+import.file "process_metrics" { filename = "/alloy-resources/modules/system/linux/metrics/process.alloy" }
+
+process_metrics.exporter "targets" {}
+process_metrics.scrape "metrics" {
+  targets = process_metrics.exporter.targets.output
+  forward_to = [prometheus.remote_write.local.receiver]
+}

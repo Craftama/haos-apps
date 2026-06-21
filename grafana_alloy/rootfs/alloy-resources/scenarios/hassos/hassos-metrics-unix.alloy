@@ -1,0 +1,8 @@
+// node_exporter (unix) metrics
+import.file "unix_metrics" { filename = "/alloy-resources/modules/system/linux/metrics/unix.alloy" }
+
+unix_metrics.exporter "targets" {}
+unix_metrics.scrape "metrics" {
+  targets = unix_metrics.exporter.targets.output
+  forward_to = [prometheus.remote_write.local.receiver]
+}

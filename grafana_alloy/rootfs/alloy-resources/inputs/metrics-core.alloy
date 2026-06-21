@@ -1,0 +1,7 @@
+// Scrape the Home Assistant core /api/prometheus endpoint (no auth).
+prometheus.scrape "core" {
+  targets      = [{ __address__ = "localhost:8123" }]
+  metrics_path = "/api/prometheus"
+  forward_to   = [prometheus.remote_write.local.receiver]
+  job_name     = "homeassistant"
+}

@@ -6,8 +6,17 @@ so it runs self-contained. The Alloy UI is at `http://<homeassistant_ip>:12345`.
 
 ## What it collects
 
-- **Metrics** → Prometheus `remote_write`: node_exporter (unix), process_exporter, cAdvisor (Docker).
-- **Logs** → Loki: systemd journal + Docker container logs, through the shared log-processing pipeline.
+The scenario is split into a **base** (the metric/log sinks + shared log pipeline) plus
+**toggleable input pipelines**. `run.sh` assembles the active config from the enabled inputs.
+
+| Toggle            | Default | Input                                                        |
+| ----------------- | ------- | ------------------------------------------------------------ |
+| `enable_unix`     | `true`  | node_exporter (unix) metrics.                                |
+| `enable_process`  | `true`  | process_exporter metrics.                                    |
+| `enable_docker`   | `true`  | cAdvisor metrics + Docker container logs.                    |
+| `enable_journal`  | `true`  | systemd journal logs.                                        |
+| `scrape_exporter` | `false` | Scrape the Home Assistant Exporter add-on at `:9878`.        |
+| `scrape_core`     | `false` | Scrape HA core `/api/prometheus` (no auth, job `homeassistant`). |
 
 ## Options
 

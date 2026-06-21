@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.0] - 2026-06-21
+
+- Split the HassOS scenario into a base + per-input pipeline files; `run.sh` assembles the active config from toggles
+- New collector toggles: `enable_unix`, `enable_process`, `enable_docker`, `enable_journal`
+- New scrape inputs: `scrape_exporter` (Home Assistant Exporter at :9878) and `scrape_core` (HA core `/api/prometheus`, no auth, job `homeassistant`)
+
 ## [0.1.3] - 2026-06-21
 
 - Add `instance` option to override the `instance` label on all metrics (host identifier), via a `write_relabel_config` in the HassOS scenario
