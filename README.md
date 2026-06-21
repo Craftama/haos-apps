@@ -1,6 +1,4 @@
-# haos-addons
-
-Craftama Home Assistant apps.
+# Craftama Home Assistant apps
 
 | Add-on | Description |
 | ------ | ----------- |
