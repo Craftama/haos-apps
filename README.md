@@ -1,15 +1,16 @@
 # Craftama Home Assistant apps
 
-| Add-on | Description |
+| App | Description |
 | ------ | ----------- |
 | [Grafana Alloy](./grafana_alloy) | OpenTelemetry Collector distribution with programmable pipelines |
 | [Home Assistant Exporter](./home_assistant_exporter) | Home Assistant metrics exporter for Prometheus |
 | [Salt Minion](./salt_minion) | Salt automates the management and configuration of infrastructure and applications at scale |
 
-See [docs/configuration.md](./docs/configuration.md) for per-add-on options and configuration examples.
+📖 **Docs:** <https://craftama.github.io/haos-apps/> (per-app options & examples)
 
-Add-on images are prebuilt by the `publish` workflow and pulled from `ghcr.io/craftama/<slug>/<arch>`
-(set as each add-on's `image:`), so installs don't compile on-device. The GHCR packages must be public.
+Each app installs from a prebuilt, multi-arch GHCR image (`ghcr.io/craftama/<slug>/<arch>`, built by
+the `publish` workflow), so Home Assistant pulls a ready image instead of compiling it on-device. The
+GHCR packages must be public for the pull to work.
 
 ## Installation
 
