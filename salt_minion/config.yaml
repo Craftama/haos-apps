@@ -1,7 +1,7 @@
 ---
 name: "Salt Minion"
 description: "SaltStack minion that connects Home Assistant to a Salt master"
-version: "0.0.4"
+version: "3008.1"
 slug: "salt_minion"
 image: "ghcr.io/craftama/salt_minion/{arch}"
 init: false

@@ -1,5 +1,10 @@
 # Changelog
 
+## [3008.1] - 2026-06-21
+
+- Pin `salt-minion` (and `salt-common`) to `3008.1`; the add-on version now tracks the bundled Salt version
+- Use the square Salt Project logomark as the add-on icon
+
 ## [0.0.4] - 2026-06-20
 
 - Add `minion_private_key` / `minion_public_key` options so the minion key pair can be managed from the add-on UI; seeded into the PKI dir on start (zero-touch acceptance when the master already trusts the key)
