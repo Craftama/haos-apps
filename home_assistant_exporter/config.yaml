@@ -1,7 +1,7 @@
 ---
 name: "Home Assistant Exporter"
 description: "Home Assistant metrics exporter for Prometheus"
-version: "0.0.6"
+version: "0.0.7"
 slug: "home_assistant_exporter"
 image: "ghcr.io/craftama/home_assistant_exporter/{arch}"
 init: false

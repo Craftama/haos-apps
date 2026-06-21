@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.0.7] - 2026-06-21
+
+- Add Prometheus icon; update description; drop `logo.png` (keep `icon.png`)
+
 ## [0.0.6] - 2026-06-20
 
 - Replace the `debug` toggle with a `log_level` option (`debug`/`info`/`warning`/`error`/`critical`), passed via the exporter's `LOG_LEVEL` env (new `--log.level` support in the 2026.6-r2 image)

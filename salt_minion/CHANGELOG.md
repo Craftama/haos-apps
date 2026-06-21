@@ -1,5 +1,9 @@
 # Changelog
 
+## [3008.1.1] - 2026-06-21
+
+- Add-on revision (Salt still `3008.1`): update description; drop `logo.png` (keep `icon.png`)
+
 ## [3008.1] - 2026-06-21
 
 - Pin `salt-minion` (and `salt-common`) to `3008.1`; the add-on version now tracks the bundled Salt version

@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.1.1] - 2026-06-21
+
+- Update description to Alloy's tagline; drop `logo.png` (keep `icon.png`)
+
 ## [0.1.0] - 2026-06-20
 
 - Switch to the alloy-resources **HassOS scenario** (`/alloy-resources/scenarios/hassos`)
