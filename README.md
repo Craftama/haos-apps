@@ -2,9 +2,9 @@
 
 | Add-on | Description |
 | ------ | ----------- |
-| [Grafana Alloy](./grafana_alloy) | Collect, process and export metrics & logs to Prometheus / Loki. |
-| [Home Assistant Exporter](./home_assistant_exporter) | Prometheus exporter for HA device / entity / ZHA / ESPHome diagnostics. |
-| [Salt Minion](./salt_minion) | SaltStack minion that connects Home Assistant to a Salt master. |
+| [Grafana Alloy](./grafana_alloy) | OpenTelemetry Collector distribution with programmable pipelines |
+| [Home Assistant Exporter](./home_assistant_exporter) | Home Assistant metrics exporter for Prometheus |
+| [Salt Minion](./salt_minion) | Salt automates the management and configuration of infrastructure and applications at scale |
 
 See [docs/configuration.md](./docs/configuration.md) for per-add-on options and configuration examples.
 
