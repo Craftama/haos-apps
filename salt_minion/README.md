@@ -70,6 +70,5 @@ directly on the host (realistic only on **HA Supervised**). Add `full_access: tr
 
 ## Todo
 
-- [ ] Add an icon/logo
 - [ ] Add an AppArmor profile
 - [ ] Pin the installed `salt-minion` version

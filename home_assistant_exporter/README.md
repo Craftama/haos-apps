@@ -59,5 +59,4 @@ prometheus.scrape "home_assistant" {
 
 ## Todo
 
-- [ ] Add an icon/logo
 - [ ] Make the `ghcr.io/cznewt/home-assistant-exporter` package public so add-on builds can pull it
