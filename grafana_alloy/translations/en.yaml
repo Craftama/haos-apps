@@ -21,3 +21,6 @@ configuration:
   region:
     name: Region Label
     description: Value of the "region" external label.
+  instance:
+    name: Instance (hostname)
+    description: Override the "instance" label on all metrics (e.g. this host's name). Empty keeps the scrape default.

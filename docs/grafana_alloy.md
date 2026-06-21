@@ -22,6 +22,7 @@ Each option maps to the environment variable the scenario reads.
 | `cluster_name`   | `CLUSTER_NAME`        | `HomeAssistant`  | `cluster` external label on every series.     |
 | `env`            | `ENV`                 | —                | `env` external label.                         |
 | `region`         | `REGION`              | —                | `region` external label.                      |
+| `instance`       | `INSTANCE`            | —                | Override the `instance` label on all metrics (host name). |
 
 !!! note "Protection mode"
     Disable **Protection mode** so the Docker (cAdvisor + log) components can reach the Docker socket

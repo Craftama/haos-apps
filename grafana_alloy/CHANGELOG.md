@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.1.3] - 2026-06-21
+
+- Add `instance` option to override the `instance` label on all metrics (host identifier), via a `write_relabel_config` in the HassOS scenario
+
 ## [0.1.2] - 2026-06-21
 
 - Trim whitespace from option values in `run.sh` so a stray leading/trailing space (e.g. `" http://…"`) no longer produces an invalid `remote_write` URL

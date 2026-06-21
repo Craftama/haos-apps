@@ -16,6 +16,7 @@ export LOGS_PRIMARY_ORG="$(trim "$(bashio::config 'logs_tenant')")"
 export CLUSTER_NAME="$(trim "$(bashio::config 'cluster_name')")"
 export ENV="$(trim "$(bashio::config 'env')")"
 export REGION="$(trim "$(bashio::config 'region')")"
+export INSTANCE="$(trim "$(bashio::config 'instance')")"
 
 if bashio::config.is_empty 'metrics_url' && bashio::config.is_empty 'logs_url'; then
     bashio::log.warning "Neither metrics_url nor logs_url is set — Alloy will run but export nowhere."
