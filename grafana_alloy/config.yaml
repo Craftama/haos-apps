@@ -1,6 +1,6 @@
 ---
 name: "Grafana Alloy"
-description: "Grafana Alloy running the alloy-resources HassOS scenario (metrics + logs)"
+description: "OpenTelemetry Collector distribution with programmable pipelines"
 version: "0.1.0"
 slug: "grafana_alloy"
 image: "ghcr.io/craftama/grafana_alloy/{arch}"
