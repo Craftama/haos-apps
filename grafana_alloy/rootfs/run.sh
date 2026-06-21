@@ -25,7 +25,6 @@ fi
 # Assemble the active config from the enabled input pipelines (Alloy loads a
 # directory, so "enabled" = copied into the working dir). base is always present.
 readonly SRC=/alloy-resources/scenarios/hassos
-readonly INPUTS=/alloy-resources/inputs
 readonly WORK=/etc/alloy/config.d
 mkdir -p "${WORK}"
 rm -f "${WORK}"/*.alloy
@@ -38,8 +37,8 @@ if bashio::config.true 'enable_docker'; then
     cp "${SRC}/hassos-metrics-docker.alloy" "${WORK}/"
     cp "${SRC}/hassos-logs-docker.alloy" "${WORK}/"
 fi
-bashio::config.true 'scrape_exporter' && cp "${INPUTS}/metrics-exporter.alloy" "${WORK}/"
-bashio::config.true 'scrape_core'     && cp "${INPUTS}/metrics-core.alloy" "${WORK}/"
+bashio::config.true 'scrape_exporter' && cp "${SRC}/hassos-metrics-exporter.alloy" "${WORK}/"
+bashio::config.true 'scrape_core'     && cp "${SRC}/hassos-metrics-core.alloy" "${WORK}/"
 
 bashio::log.info "Starting Grafana Alloy (HassOS scenario)"
 bashio::log.info "  metrics -> ${METRICS_PRIMARY_URL:-<unset>} (tenant: ${METRICS_PRIMARY_ORG:-none})"

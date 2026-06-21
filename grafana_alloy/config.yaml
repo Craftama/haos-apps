@@ -1,7 +1,7 @@
 ---
 name: "Grafana Alloy"
 description: "OpenTelemetry Collector distribution with programmable pipelines"
-version: "0.2.0"
+version: "0.2.1"
 slug: "grafana_alloy"
 image: "ghcr.io/craftama/grafana_alloy/{arch}"
 init: false

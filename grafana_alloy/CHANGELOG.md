@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.1] - 2026-06-21
+
+- Move the `scrape_exporter` / `scrape_core` inputs into the HassOS scenario (also added upstream in alloy-resources)
+
 ## [0.2.0] - 2026-06-21
 
 - Split the HassOS scenario into a base + per-input pipeline files; `run.sh` assembles the active config from toggles
