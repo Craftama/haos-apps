@@ -1,4 +1,4 @@
 # https://developers.home-assistant.io/docs/add-ons/repository#repository-configuration
-name: Craftama Home Assistant Add-Ons
+name: Craftama apps
 url: 'https://github.com/Craftama/haos-apps'
 maintainer: Craftama
